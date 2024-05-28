@@ -102,6 +102,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
+
+            // Verifica se todos os vértices foram visitados
+            for (let vertice in this.vertices) {
+                if (!visitados.has(vertice)) {
+                    console.log("O grafo é desconexo");
+                    return null
+                }
+            }
         
             // Constrói a árvore geradora mínima
             const mst = [];
@@ -213,6 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const inicio = prompt("Digite o ID do vértice inicial:");
         if (inicio && grafo.vertices[inicio]) {
             const mst = grafo.prim(inicio);
+            if (!mst) return alert("O grafo é desconexo. Conecte todas as arestas para calcular a MST")
             const arestasMST = new Set();
             mst.forEach(aresta => {
                 arestasMST.add(aresta.origem + aresta.destino);
