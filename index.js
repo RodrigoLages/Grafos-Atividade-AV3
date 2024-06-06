@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Funções para adicionar e remover vértices e arestas
     window.adicionarVertice = function() {
-        const id = prompt("Digite o ID do novo vértice:");
+        const id = prompt("Digite o ID do novo vértice:").toLocaleUpperCase();
         console.log(`Prompt returned: ${id}`);
         if (id) {
             const vertice = new Vertice(id);
@@ -166,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.removerVertice = function() {
-        const id = prompt("Digite o ID do vértice a ser removido:");
+        const id = prompt("Digite o ID do vértice a ser removido:").toLocaleUpperCase();
         if (id && grafo.vertices[id]) {
             cy.remove(cy.getElementById(id));
             delete grafo.vertices[id];
@@ -178,8 +178,8 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.adicionarAresta = function() {
-        const origem = prompt("Digite o ID do vértice de origem:");
-        const destino = prompt("Digite o ID do vértice de destino:");
+        const origem = prompt("Digite o ID do vértice de origem:").toLocaleUpperCase();
+        const destino = prompt("Digite o ID do vértice de destino:").toLocaleUpperCase();
         const peso = parseFloat(prompt("Digite o peso da aresta:"));
 
         if (origem && destino && !isNaN(peso) && grafo.vertices[origem] && grafo.vertices[destino]) {
@@ -195,9 +195,10 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     window.removerAresta = function() {
-        const id = prompt("Digite o ID da aresta a ser removida (ID é source + target):");
+        const id = prompt("Digite o ID da aresta a ser removida (ID é source + target):").toLocaleUpperCase();
         if (id) {
-            const edge = cy.getElementById(id);
+            const inv_id = id.split("").reverse().join("")
+            const edge = cy.getElementById(id).length ? cy.getElementById(id) : cy.getElementById(inv_id);
             if (edge.length) {
                 const source = edge.data('source');
                 const target = edge.data('target');
@@ -218,7 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let mst; // Variável para armazenar a árvore geradora mínima
 
     window.calcularArvoreGeradoraMinima = function() {
-        const inicio = prompt("Digite o ID do vértice inicial:");
+        const inicio = prompt("Digite o ID do vértice inicial:").toLocaleUpperCase();
         if (inicio && grafo.vertices[inicio]) {
             const mst = grafo.prim(inicio);
             if (!mst) return alert("O grafo é desconexo. Conecte todas as arestas para calcular a MST")
